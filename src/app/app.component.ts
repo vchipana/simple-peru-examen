@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 	
 	alerts: any = {};
 	
-	itemsPerPage: Number = 5;
+	pagination: PageChangedEvent = {page: 1, itemsPerPage: 5};
 	
 	constructor(
 		private modalService: BsModalService,
@@ -69,27 +69,35 @@ export class AppComponent implements OnInit {
 	addPersona() {
 		if(this.indexPersonaSeleccionada != null) {
 			this.personas[this.indexPersonaSeleccionada] = {...this.persona};
-			this.showAlertNewPersona();
+			this.showAlertEditPersona();
 		} else {
 			this.personas.push(this.persona);
+			this.showAlertNewPersona();
 		}
+		this.pageChanged(this.pagination);
 		this.setLocalStorage();
 		this.closeModal();
 	}
 	
 	editPersona(index) {
 		this.indexPersonaSeleccionada = index;
-		this.persona = {...this.personas[index]};
+		this.persona = {...this.personas[this.getIndexByPagination(index)]};
 	}
 	
 	deletePersona(index) {
+		console.log(this.pagination);
 		this.indexPersonaSeleccionada = index;
 	}
 	
 	confirmarDelete() {
-		this.personas.splice(this.indexPersonaSeleccionada, 1);
+		this.personas.splice(this.getIndexByPagination(this.indexPersonaSeleccionada), 1);
+		this.pageChanged(this.pagination);
 		this.setLocalStorage();
 		this.closeModal();
+	}
+	
+	getIndexByPagination(index) {
+		return ((this.pagination.page - 1) * this.pagination.itemsPerPage) + index;
 	}
 	
 	setLocalStorage() {
@@ -101,8 +109,10 @@ export class AppComponent implements OnInit {
 	}
 	 
 	pageChanged(event: PageChangedEvent): void {
+		console.log(event);
 		const startItem = (event.page - 1) * event.itemsPerPage;
 		const endItem = event.page * event.itemsPerPage;
+		this.pagination = event;
 		this.personaPaginadas = this.personas.slice(startItem, endItem);
 	}
 	
@@ -110,6 +120,13 @@ export class AppComponent implements OnInit {
 		this.alerts.nuevaPersona = true;
 		setTimeout(() => {
 			this.alerts.nuevaPersona = false;
-		}, 3000)
+		}, 5000)
+	}
+	
+	showAlertEditPersona() {
+		this.alerts.editPersona = true;
+		setTimeout(() => {
+			this.alerts.editPersona = false;
+		}, 5000)
 	}
 }
