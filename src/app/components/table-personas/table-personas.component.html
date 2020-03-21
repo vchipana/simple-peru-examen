@@ -13,7 +13,7 @@
 			  </thead>
 			  <tbody>
 				<tr *ngFor="let persona of personaPaginadas | filterPersonas:filtro; let index = index">
-					<th class="text-center" scope="row">{{index + 1}}</th>
+					<th class="text-center" scope="row">{{getIndexByPagination(index) + 1}}</th>
 					<td>{{persona.nombre}}</td>
 					<td>{{persona.apellidos}}</td>
 					<td class="text-center">{{persona.fechaNacimiento | date:'dd-MM-yyyy'}}</td>
