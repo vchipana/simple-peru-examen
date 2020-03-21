@@ -1,22 +1,13 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { PaginationModule  } from 'ngx-bootstrap/pagination';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
-import { ButtonNewModule } from './components/button-new/button-new.module';
-import { ButtonEditModule } from './components/button-edit/button-edit.module';
-import { ButtonDeleteModule } from './components/button-delete/button-delete.module';
-import { InputSearchModule } from './components/input-search/input-search.module';
-
-import { FiltersModule } from './core/filters/filters.module';
+import { FilterPersonasModule } from './components/filter-personas/filter-personas.module';
+import { TablePersonasModule } from './components/table-personas/table-personas.module';
+import { FormPersonaModule } from './components/form-persona/form-persona.module';
 
 import { AppComponent } from './app.component';
-import { AppService } from './app.service';
 
 @NgModule({
 	declarations: [
@@ -24,24 +15,14 @@ import { AppService } from './app.service';
 	],
 	imports: [
 		BrowserModule,
-		FormsModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
-		
-		ModalModule.forRoot(),
-		PaginationModule.forRoot(),
-		BsDatepickerModule.forRoot(),
 
-		ButtonNewModule,
-		ButtonEditModule,
-		ButtonDeleteModule,
-		InputSearchModule,
-		
-		FiltersModule,
+		FilterPersonasModule,
+		TablePersonasModule,
+		FormPersonaModule,
 	],
-	providers: [
-		AppService,
-	],
+	providers: [],
 	bootstrap: [
 		AppComponent,
 	]

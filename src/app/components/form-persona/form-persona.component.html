@@ -1,0 +1,47 @@
+<div class="form-persona">
+						
+		<div class="alert alert-info" role="alert" *ngIf="alerts.nuevaPersona">
+			La persona ha sido registrada, está al final de la lista!
+		</div>							
+		<div class="alert alert-info" role="alert" *ngIf="alerts.editPersona">
+			La persona ha sido actualizada!
+		</div>
+		
+		<ng-template #templateForm>
+			<div class="modal-header">
+				<h4 class="modal-title pull-left">{{indexPersonaSeleccionada >= 0 ? 'Actualizar' : 'Registrar'}}</h4>
+				<button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal form-signin">					
+					<div class="alert alert-info" role="alert">
+						Todos los campos son obligatorios
+					</div>
+					<div class="form-label-group">
+						<input type="text" name="nombre" class="form-control" placeholder="Nombre" [(ngModel)]="persona.nombre">
+						<label>Nombre</label>
+					</div>
+					
+					<div class="form-label-group">
+						<input type="text" name="apellidos" class="form-control" placeholder="Apellidos" [(ngModel)]="persona.apellidos">
+						<label>Apellidos</label>
+					</div>
+					
+					<div class="form-label-group">
+						<input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" name="fechaNacimiento" class="form-control" placeholder="fechaNacimiento" [(ngModel)]="persona.fechaNacimiento">
+						<label>Fecha de nacimiento</label>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light" (click)="closeModal()">
+					Cerrar
+				</button>
+				<button type="button" [disabled]="!persona.nombre || !persona.apellidos || !persona.fechaNacimiento" class="btn btn-primary" (click)="addPersona(); closeModal()" >
+					Confirmar
+				</button>
+			</div>
+		</ng-template>
+</div>

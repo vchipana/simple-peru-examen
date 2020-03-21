@@ -1,122 +1,24 @@
 <div class="content">
 	<form class="form-horizontal">
-		<div class="row">
-			<div class="col-md-6">
-				<input-search
-					[(filtro)]="filtro"
-				></input-search>
-			</div>
-			<div class="col-md-6">
-				<button-new class="float-right" (click)="openModal(templateNew)"></button-new>			
-			</div>
-		</div>
+	
+		<filter-personas 
+			[(filtro)]="filtro" 
+			(onNew)="open.formPersona=true"
+		></filter-personas>
 		
-		<div class="row">
-			<div class="col-md-12">								
-				<div class="alert alert-info" role="alert" *ngIf="alerts.nuevaPersona">
-					La persona ha sido registrada, está al final de la lista!
-				</div>							
-				<div class="alert alert-info" role="alert" *ngIf="alerts.editPersona">
-					La persona ha sido actualizada!
-				</div>
+		<form-persona 
+			[(personas)]="personas" 
+			(onConfirm)="reload.tablePersonas=true" 
+			[(open)]="open.formPersona" 
+			[indexPersonaSeleccionada]="indexPersonaSeleccionada"
+		></form-persona>
 				
-				<table class="table table-hover table-bordered">
-				  <thead>
-					<tr>
-					  <th class="text-center" scope="col">id</th>
-					  <th class="text-center" scope="col">Nombres</th>
-					  <th class="text-center" scope="col">Apellidos</th>
-					  <th class="text-center" scope="col">Cumpleaños</th>
-					  <th class="text-center" scope="col">Acciones</th>
-					</tr>
-				  </thead>
-				  <tbody>
-					<tr *ngFor="let persona of personaPaginadas | filterPersonas:filtro; let index = index">
-						<th class="text-center" scope="row">{{index + 1}}</th>
-						<td>{{persona.nombre}}</td>
-						<td>{{persona.apellidos}}</td>
-						<td class="text-center">{{persona.fechaNacimiento | date:'dd-MM-yyyy'}}</td>
-						<td class="text-center">
-							<button-edit (click)="editPersona(index); openModal(templateNew)"></button-edit>&nbsp;
-							<button-delete (click)="deletePersona(index); openModal(templateDelete)"></button-delete>
-						</td>
-					</tr>
-				  </tbody>
-				</table>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-md-12">
-				<pagination 
-					class="float-right" 
-					previousText="&lsaquo;" 
-					nextText="&rsaquo;" 
-					[itemsPerPage]="pagination.itemsPerPage" 
-					[totalItems]="personas.length" 
-					(pageChanged)="pageChanged($event)"
-				></pagination>
-			</div>
-		</div>
-		
-		<ng-template #templateNew>
-			<div class="modal-header">
-				<h4 class="modal-title pull-left">{{indexPersonaSeleccionada >= 0 ? 'Actualizar' : 'Registrar'}}</h4>
-				<button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal form-signin">					
-					<div class="alert alert-info" role="alert">
-						Todos los campos son obligatorios
-					</div>
-					<div class="form-label-group">
-						<input type="text" name="nombre" class="form-control" placeholder="Nombre" [(ngModel)]="persona.nombre">
-						<label>Nombre</label>
-					</div>
-					
-					<div class="form-label-group">
-						<input type="text" name="apellidos" class="form-control" placeholder="Apellidos" [(ngModel)]="persona.apellidos">
-						<label>Apellidos</label>
-					</div>
-					
-					<div class="form-label-group">
-						<input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" name="fechaNacimiento" class="form-control" placeholder="fechaNacimiento" [(ngModel)]="persona.fechaNacimiento">
-						<label>Fecha de nacimiento</label>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-light" (click)="closeModal()">
-					Cerrar
-				</button>
-				<button type="button" [disabled]="!persona.nombre || !persona.apellidos || !persona.fechaNacimiento" class="btn btn-primary" (click)="addPersona(); closeModal()" >
-					Confirmar
-				</button>
-			</div>
-		</ng-template>
-		
-		<ng-template #templateDelete>
-			<div class="modal-header">
-				<h4 class="modal-title pull-left">Eliminar</h4>
-				<button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="alert alert-danger" role="alert">
-					¿Está seguro que desea eliminar?
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-light" (click)="closeModal()">
-					Cerrar
-				</button>
-				<button type="button" class="btn btn-primary" (click)="confirmarDelete()" >
-					Confirmar
-				</button>
-			</div>
-		</ng-template>
+		<table-personas 
+			[(personas)]="personas" 
+			[filtro]="filtro" 
+			[(reload)]="reload.tablePersonas"
+			(onEdit)="indexPersonaSeleccionada=$event; open.formPersona=true;"
+		></table-personas>
+				
 	</form>
 </div>

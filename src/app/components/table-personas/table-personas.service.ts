@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class AppService {
+export class TablePersonasService {
 	
 	constructor(
 		private httpClient: HttpClient) {}

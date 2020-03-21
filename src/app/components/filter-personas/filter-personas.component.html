@@ -1,0 +1,12 @@
+<div class="filter-personas">
+	<div class="row">
+		<div class="col-md-6">
+			<input-search
+				[(filtro)]="filtro" (filtroChange)="filtroChange.emit($event)"
+			></input-search>
+		</div>
+		<div class="col-md-6">
+			<button-new class="float-right" (click)="onNew.emit()"></button-new>			
+		</div>
+	</div>
+</div>

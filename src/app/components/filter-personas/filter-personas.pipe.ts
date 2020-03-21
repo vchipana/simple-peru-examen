@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'filterPersonas'})
-export class FilterPersonas implements PipeTransform {
+export class FilterPersonasPipe implements PipeTransform {
 	
 	transform(personasOriginal: any = [], valor: any = '') {
 		let personasFiltradas = [];
